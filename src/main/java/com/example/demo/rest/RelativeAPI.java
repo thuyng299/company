@@ -1,6 +1,7 @@
 package com.example.demo.rest;
 
 import com.example.demo.dto.RelativeDTO;
+import com.example.demo.dto.RelativeOfEmpWithMinSalaryInDeptDTO;
 import com.example.demo.entity.Gender;
 import com.example.demo.entity.Relative;
 import org.springframework.http.ResponseEntity;
@@ -35,4 +36,8 @@ public interface RelativeAPI {
     @PutMapping("/{relativeId}")
     ResponseEntity<Relative> updateRelative(@PathVariable("relativeId") Long relativeId,
                                             @RequestBody RelativeDTO relativeDTO);
+    @GetMapping("/relativebygenderandempid")
+    ResponseEntity<List<RelativeDTO>> getRelativeByGenderAndEmployeeId();
+    @GetMapping("/relativeofempwithminsalaryindept")
+    ResponseEntity<List<RelativeOfEmpWithMinSalaryInDeptDTO>> getRelativeOfEmpWithMinSalaryInDept();
 }

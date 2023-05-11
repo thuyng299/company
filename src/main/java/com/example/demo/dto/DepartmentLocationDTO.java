@@ -7,5 +7,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DepartmentLocationDTO {
     private String location;
-
+    private String departmentName;
 }

@@ -11,6 +11,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "assignment")
+@NamedQuery(name = "Assignment.getAssignmentOfDept",
+            query = "select a from Assignment a, Project p where a.project.projectID = p.projectID and p.department.id = :id")
 public class Assignment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

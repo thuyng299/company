@@ -5,6 +5,7 @@ import com.example.demo.entity.Project;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,4 +35,8 @@ public interface ProjectAPI {
     @PutMapping(value = "/{projectId}")
     ResponseEntity<Project> updateProject(@PathVariable("projectId") Long projectId,
                                           @RequestBody ProjectDTO projectDTO);
+    @GetMapping("/projectbynameordeptid")
+    ResponseEntity<List<ProjectDTO>> getProjectByNameOrDeptId(@RequestParam("id") @NotBlank Long id);
+    @GetMapping("/projectbyareaname")
+    ResponseEntity<List<ProjectDTO>> getProjectByAreaContains();
 }

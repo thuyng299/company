@@ -5,6 +5,7 @@ import com.example.demo.entity.Assignment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -35,4 +36,8 @@ public interface AssignmentAPI {
     @PutMapping(value = "/{assignId}")
     ResponseEntity<Assignment> updateAssignment(@PathVariable("assignId") Long assignId,
                                                 @RequestBody AssignmentDTO assignmentDTO);
+    @GetMapping("/assignmentofdepartment")
+    ResponseEntity<List<AssignmentDTO>> getAssignmentOfDept(@RequestParam("id") @NotBlank Long id);
+    @GetMapping("/assignmentbyhourandprojectid")
+    ResponseEntity<List<AssignmentDTO>> getAssignmentByHourAndProjectId();
 }

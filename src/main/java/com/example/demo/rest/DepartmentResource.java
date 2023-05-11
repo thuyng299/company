@@ -1,11 +1,17 @@
 package com.example.demo.rest;
 
 import com.example.demo.dto.DepartmentDTO;
+import com.example.demo.dto.DepartmentOfEmployeeWithMaxSalaryDTO;
+import com.example.demo.dto.DepartmentWithNumberOfEmployeesDTO;
 import com.example.demo.entity.Department;
+import com.example.demo.exception.DemoException;
+import com.example.demo.exception.ResponseException;
 import com.example.demo.service.DepartmentService;
+import com.example.demo.serviceimpl.DepartmentServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
@@ -16,57 +22,77 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 public class DepartmentResource implements DepartmentAPI{
-    private final DepartmentService departmentService;
+    private final DepartmentServiceImpl departmentServiceImpl;
     @Override
-    public ResponseEntity<List<Department>> getAllDepartment(){
-        return ResponseEntity.ok(departmentService.getAllDepartment());
-    }
-
-    @Override
-    public ResponseEntity<Optional<Department>> findDepartmentById(Long deptid){
-        return ResponseEntity.ok(departmentService.findDepartmentById(deptid));
+    public ResponseEntity<List<DepartmentDTO>> getAllDepartment(){
+        return ResponseEntity.ok(departmentServiceImpl.getAllDepartment());
     }
     @Override
-    public ResponseEntity<List<Department>> findByName(String departmentName){
-        return ResponseEntity.ok(departmentService.findByName(departmentName));
+    public ResponseEntity<DepartmentDTO> findDepartmentById(Long deptid){
+        return ResponseEntity.ok(departmentServiceImpl.findDepartmentById(deptid));
     }
     @Override
-    public ResponseEntity<List<Department>> findByNameIsNull(){
-        return ResponseEntity.ok(departmentService.findByNameIsNull());
+    public ResponseEntity<List<DepartmentDTO>> findByName(String departmentName) {
+        return ResponseEntity.ok(departmentServiceImpl.findByName(departmentName));
     }
     @Override
-    public ResponseEntity<List<Department>> findByNameNot(String departmentName){
-        return ResponseEntity.ok(departmentService.findByNameNot(departmentName));
+    public ResponseEntity<List<DepartmentDTO>> findByNameIsNull(){
+        return ResponseEntity.ok(departmentServiceImpl.findByNameIsNull());
     }
     @Override
-    public ResponseEntity<List<Department>> findByNameAndStartDate( String departmentName,LocalDate startDate){
-        return ResponseEntity.ok(departmentService.findByNameAndStartDate(departmentName, startDate));
+    public ResponseEntity<List<DepartmentDTO>> findByNameNot(String departmentName){
+        return ResponseEntity.ok(departmentServiceImpl.findByNameNot(departmentName));
     }
     @Override
-    public ResponseEntity<List<Department>> findByStartDate(LocalDate startDate){
-        return ResponseEntity.ok(departmentService.findByStartDate(startDate));
+    public ResponseEntity<List<DepartmentDTO>> findByNameAndStartDate( String departmentName,LocalDate startDate){
+        return ResponseEntity.ok(departmentServiceImpl.findByNameAndStartDate(departmentName, startDate));
     }
     @Override
-    public ResponseEntity<List<Department>> findByStartDateBetween(LocalDate date1, LocalDate date2){
-        return ResponseEntity.ok(departmentService.findByStartDateBetween(date1, date2));
+    public ResponseEntity<List<DepartmentDTO>> findByStartDate(LocalDate startDate){
+        return ResponseEntity.ok(departmentServiceImpl.findByStartDate(startDate));
     }
     @Override
-    public ResponseEntity<List<Department>> findByOrderByStartDateAsc(){
-        return ResponseEntity.ok(departmentService.findByOrderByStartDateAsc());
+    public ResponseEntity<List<DepartmentDTO>> findByStartDateBetween(LocalDate date1, LocalDate date2){
+        return ResponseEntity.ok(departmentServiceImpl.findByStartDateBetween(date1, date2));
+    }
+    @Override
+    public ResponseEntity<List<DepartmentDTO>> findByOrderByStartDateAsc(){
+        return ResponseEntity.ok(departmentServiceImpl.findByOrderByStartDateAsc());
     }
     @Override
     public ResponseEntity<Department> createDepartment(DepartmentDTO departmentDTO){
-        Department department = departmentService.createDepartment(departmentDTO);
+        Department department = departmentServiceImpl.createDepartment(departmentDTO);
         return ResponseEntity.created(URI.create("/api/departments" + department.getId())).body(department);
     }
     @Override
     public ResponseEntity<Void> deleteDepartment(Long deptid){
-        departmentService.deleteDepartment(deptid);
+        departmentServiceImpl.deleteDepartment(deptid);
         return ResponseEntity.noContent().build();
     }
     @Override
     public ResponseEntity<Department> updateDepartment(Long deptid, DepartmentDTO departmentDTO){
-        Department result = departmentService.updateDepartment(deptid, departmentDTO);
+        Department result = departmentServiceImpl.updateDepartment(deptid, departmentDTO);
         return ResponseEntity.ok().body(result);
+    }
+    @Override
+    public ResponseEntity<List<DepartmentWithNumberOfEmployeesDTO>> getNumberOfEmployeesInDepartments(){
+        return ResponseEntity.ok(departmentServiceImpl.getNumberOfEmployeesInDepartments());
+    }
+    @Override
+    public ResponseEntity<List<DepartmentDTO>> getDepartmentByDepartmentNameOrStartDate(String name, LocalDate startDate){
+        try{
+            return ResponseEntity.ok().body(departmentServiceImpl.getDepartmentByDepartmentNameOrStartDate(name, startDate));
+        }catch (ResponseException e){
+            throw e;
+        }
+    }
+
+    @Override
+    public ResponseEntity<List<DepartmentOfEmployeeWithMaxSalaryDTO>> getEmployeeWithMaxSalary() {
+        try{
+            return ResponseEntity.ok().body(departmentServiceImpl.getEmployeeWithMaxSalary());
+        }catch (ResponseException e){
+            throw e;
+        }
     }
 }

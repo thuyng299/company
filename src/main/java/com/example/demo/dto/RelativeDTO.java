@@ -11,5 +11,7 @@ public class RelativeDTO {
     private Gender gender;
     private String phoneNumber;
     private String relationship;
+    private String firstName;
+    private String lastName;
 
 }

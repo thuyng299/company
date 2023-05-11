@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class AssignmentDTO {
+    private Long id;
     private Integer numberOfHour;
-
+    private String employeeID;
+    private String projectName;
 }

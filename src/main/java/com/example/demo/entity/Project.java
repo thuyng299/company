@@ -11,6 +11,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "project")
+@NamedQuery(name = "Project.getProjectByNameOrDeptId",
+            query = "select p from Project p, Department d where p.department.id = d.id and (p.projectName like '%Twitterlist%' or d.id = :id)")
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

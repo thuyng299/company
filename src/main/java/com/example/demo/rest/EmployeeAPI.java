@@ -1,11 +1,13 @@
 package com.example.demo.rest;
 
+import com.example.demo.dto.DepartmentDTO;
 import com.example.demo.dto.EmployeeDTO;
 import com.example.demo.entity.Employee;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -38,5 +40,9 @@ public interface EmployeeAPI {
     @PutMapping("/{employeeId}")
     ResponseEntity<Employee> updateEmployee(@PathVariable("employeeId") String employeeId,
                                             @RequestBody EmployeeDTO employeeDTO);
-
+    @GetMapping("/agegreaterthan")
+    ResponseEntity<List<EmployeeDTO>> getEmployeeAgeGreaterThan(@RequestParam("age") @NotBlank Integer age);
+    @GetMapping("/employeeswithfirstnameandsalary")
+    ResponseEntity<List<EmployeeDTO>> getEmployeeWithFirstNameAndSalary(@RequestParam("firstName") @NotBlank String firstName,
+                                                                        @RequestParam("salary") @NotBlank Integer salary);
 }

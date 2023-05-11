@@ -5,6 +5,7 @@ import com.example.demo.entity.DepartmentLocation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,4 +36,8 @@ public interface DepartmentLocationAPI {
     @PutMapping("/{locationId}")
     ResponseEntity<DepartmentLocation> updateDepartmentLocation(@PathVariable("locationId") Long locationId,
                                                                 @RequestBody DepartmentLocationDTO departmentLocationDTO);
+    @GetMapping("/locationofdepartment")
+    ResponseEntity<List<DepartmentLocationDTO>> getLocationOfDepartment(@RequestParam("id") @NotBlank Long id);
+    @GetMapping("/locationbynameanddeptname")
+    ResponseEntity<List<DepartmentLocationDTO>> getLocationByNameAndDeptName();
 }

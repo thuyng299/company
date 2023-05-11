@@ -8,4 +8,5 @@ import lombok.NoArgsConstructor;
 public class ProjectDTO {
     private String area;
     private String projectName;
+    private String departmentName;
 }

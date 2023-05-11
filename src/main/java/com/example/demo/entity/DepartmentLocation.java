@@ -11,6 +11,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "department_location")
+@NamedQuery(name = "DepartmentLocation.getLocationByNameAndDeptName",
+            query = "select dl from DepartmentLocation dl, Department d where dl.department.id = d.id and d.name like '%abc%'and dl.location like '%i%'")
 public class DepartmentLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
